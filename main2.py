@@ -1,12 +1,44 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+
 main_df = pd.DataFrame()
 sizes = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000]
 
 for i in sizes:
     df = pd.read_csv('Result_CPU/CPU_' + str(i) + '.txt')
     df["Size"] = i
-    df["Type"] = "CPU"
-    df["seconds"] = df['microseconds'] / 1000000
+    df["Type"] = "CPU SHA-256"
     main_df = pd.concat([main_df, df])
+
+for i in range(len(sizes)):
+    temp_df = pd.DataFrame()
+    df = pd.read_csv('Result_PARSHA/GPU_' + str(i) + '.csv', skiprows=3)
+    df = df[1:]
+    df = pd.to_numeric(df['Duration'])
+    iters = len(df.index) / 100
+
+    # print(df)
+    for k in range(100):
+        val = 0
+        for j in range(int(iters)):
+            val += df.values[k + j * 100]
+        temp_df = temp_df.append({'microseconds': val}, ignore_index=True)
+
+    temp_df["Size"] = sizes[i]
+    temp_df["Type"] = 'GPU PARSHA-256'
+    main_df = pd.concat([main_df, temp_df])
+    # print(temp_df)
+
+
+
+
+sns.set(style="whitegrid", rc={'figure.figsize': (16, 9)}, font_scale=2)
+ax = sns.lineplot(x="Size", y="microseconds", style="Type", hue='Type', err_style='bars', data=main_df, markers=True, dashes=False)
+ax.set(xscale="log", yscale="log")
+ax.set(ylabel="Time [μs]", xlabel='Input size [Bytes]', title='SHA-256 vs. PARSHA-256')
+handles, labels = ax.get_legend_handles_labels()
+ax.legend(handles=handles[0:], labels=labels[0:])
+
+# plt.show()
+plt.savefig('plot_parsha.pdf', format="pdf", bbox_inches="tight")
