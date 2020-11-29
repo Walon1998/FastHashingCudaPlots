@@ -30,8 +30,17 @@ for i in range(len(sizes)):
     main_df = pd.concat([main_df, temp_df])
     # print(temp_df)
 
+df = pd.read_csv('Result_GPU/GPU_1_1.csv', skiprows=3)
+df = df[1:]
+for i in sizes:
+    temp_df = pd.DataFrame()
+    temp_df["microseconds"] = pd.to_numeric(df.head(100)['Duration']) * 1000000
+    temp_df["Size"] = i
+    temp_df["Type"] = 'GPU SHA-256'
+    df = df[100:]
+    main_df = pd.concat([main_df, temp_df])
 
-
+print(main_df)
 
 sns.set(style="whitegrid", rc={'figure.figsize': (16, 9)}, font_scale=2)
 ax = sns.lineplot(x="Size", y="microseconds", style="Type", hue='Type', err_style='bars', data=main_df, markers=True, dashes=False, linewidth=5, ms=12)
