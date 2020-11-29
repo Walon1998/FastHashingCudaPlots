@@ -1,6 +1,6 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
 
 main_df = pd.DataFrame()
 sizes = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000]
@@ -34,7 +34,7 @@ for i in range(len(sizes)):
 
 
 sns.set(style="whitegrid", rc={'figure.figsize': (16, 9)}, font_scale=2)
-ax = sns.lineplot(x="Size", y="microseconds", style="Type", hue='Type', err_style='bars', data=main_df, markers=True, dashes=False)
+ax = sns.lineplot(x="Size", y="microseconds", style="Type", hue='Type', err_style='bars', data=main_df, markers=True, dashes=False, linewidth=5, ms=12)
 ax.set(xscale="log", yscale="log")
 ax.set(ylabel="Time [μs]", xlabel='Input size [Bytes]', title='SHA-256 vs. PARSHA-256')
 handles, labels = ax.get_legend_handles_labels()
