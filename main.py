@@ -1,7 +1,6 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-import math
 
 sizes = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000]
 blocks = [16, 16, 32, 256, 2512, 25008, 250016, 2500016, 25000016]
