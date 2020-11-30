@@ -49,5 +49,12 @@ ax.set(ylabel="Time [μs]", xlabel='Input size [Bytes]', title='SHA-256 vs. PARS
 handles, labels = ax.get_legend_handles_labels()
 ax.legend(handles=handles[0:], labels=labels[0:])
 
+new_df = main_df[main_df['Size'] == 100000000]
+new_df = new_df.groupby(['Type']).mean()
+print(new_df)
+
+for x, y in zip(new_df['Size'], new_df['microseconds']):
+    plt.text(x=(x + 25000000), y=(y), s='{:.0f}'.format(y), fontsize=14)
+
 # plt.show()
 plt.savefig('plot_parsha.pdf', format="pdf", bbox_inches="tight")

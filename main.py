@@ -108,4 +108,4 @@ ax.legend(handles=handles[0:], labels=labels[0:])
 
 # plt.show()
 
-plt.savefig('plot_sha_64.pdf', format="pdf", bbox_inches="tight")
+plt.savefig('plot_sha.pdf', format="pdf", bbox_inches="tight")
