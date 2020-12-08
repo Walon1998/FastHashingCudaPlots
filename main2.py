@@ -56,5 +56,5 @@ print(new_df)
 for x, y in zip(new_df['Size'], new_df['microseconds']):
     plt.text(x=(x + 25000000), y=(y), s='{:.0f}'.format(y), fontsize=14)
 
-# plt.show()
-plt.savefig('plot_parsha.pdf', format="pdf", bbox_inches="tight")
+plt.show()
+# plt.savefig('plot_parsha.pdf', format="pdf", bbox_inches="tight")
